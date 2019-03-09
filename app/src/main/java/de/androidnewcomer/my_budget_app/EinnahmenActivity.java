@@ -2,6 +2,7 @@ package de.androidnewcomer.my_budget_app;
 
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Room;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -10,19 +11,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EinnahmenActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EinnahmenActivity mainActivity;
     private Button home;
     private Button createEinnahme;
-    TextView inputTextEinnahme;
-    TextView inputNumberEinnahme;
+    EditText inputTextEinnahme;
+    EditText inputNumberEinnahme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +42,29 @@ public class EinnahmenActivity extends AppCompatActivity implements View.OnClick
         if(view.getId() == R.id.btn_zurueck) {
             startActivityForResult(new Intent( this, MainActivity.class), 1);
         }
+        if(view.getId() == R.id.btn_einnahmen){
+            inputTextEinnahme = findViewById(R.id.inputTextEinnahme);
+            inputNumberEinnahme = findViewById(R.id.inputNumberEinnahme);
+            createEinnahme(inputTextEinnahme.getText().toString(), Double.parseDouble(inputNumberEinnahme.getText().toString()));
+        }
+
+
     }
 
-    @Insert
-    public void createEinnahme(String name, double betrag){
-        Einnahme einnahme = new Einnahme(name, betrag);
-        if(einnahme.getNameDerEinnahme() != "" && einnahme.getBetragDerEinnahme() > 0){
-            EinnahmeDatabase db = Room.databaseBuilder(getApplicationContext(),
-                    EinnahmeDatabase.class, "myBudgetApp").build();
-            db.einnahmeDAO().insertAll(einnahme);
-        }
+    //@Insert
+    public void createEinnahme(final String name, final double betrag){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                Einnahme einnahme = new Einnahme(name, betrag);
+                if (einnahme.getNameDerEinnahme() != "" && einnahme.getBetragDerEinnahme() > 0) {
+                    EinnahmeDatabase db = Room.databaseBuilder(getApplicationContext(),
+                            EinnahmeDatabase.class, "myBudgetApp").fallbackToDestructiveMigration().build();
+                    db.einnahmeDAO().insertAll(einnahme);
+                    Log.d("Einnahme", "Einnahme eingefügt");
+                }
+            }
+        });
+        Toast.makeText(mainActivity, "Juuuu", Toast.LENGTH_LONG);
     }
 }

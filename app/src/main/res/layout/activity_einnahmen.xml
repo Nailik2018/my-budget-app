@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
-            android:onClick="createEinnahme(inputTextEinnahme, inputNumberEinnahme)"
+            android:onClick="onClick"
             android:text="Einnahmen erstellen" />
     </LinearLayout>
 
