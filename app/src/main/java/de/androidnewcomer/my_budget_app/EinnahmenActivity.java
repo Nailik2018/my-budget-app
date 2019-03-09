@@ -51,20 +51,26 @@ public class EinnahmenActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    //@Insert
+    /**
+     * @param name name der Einnahme
+     * @param betrag betrag der Einnahme
+     * Fügt die Einnahme in die Datenank myBudgetApp
+     *
+     */
     public void createEinnahme(final String name, final double betrag){
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 Einnahme einnahme = new Einnahme(name, betrag);
                 if (einnahme.getNameDerEinnahme() != "" && einnahme.getBetragDerEinnahme() > 0) {
-                    EinnahmeDatabase db = Room.databaseBuilder(getApplicationContext(),
-                            EinnahmeDatabase.class, "myBudgetApp").fallbackToDestructiveMigration().build();
+                    DatabaseConnection db = Room.databaseBuilder(getApplicationContext(),
+                            DatabaseConnection.class, "myBudgetApp").fallbackToDestructiveMigration().build();
                     db.einnahmeDAO().insertAll(einnahme);
+                    // Konsolen Nachricht
                     Log.d("Einnahme", "Einnahme eingefügt");
                 }
             }
         });
-        Toast.makeText(mainActivity, "Juuuu", Toast.LENGTH_LONG);
+        //Toast.makeText(mainActivity, "Juuuu", Toast.LENGTH_LONG);
     }
 }
