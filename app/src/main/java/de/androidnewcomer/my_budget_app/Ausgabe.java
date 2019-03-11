@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class Ausgabe {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
     @ColumnInfo(name = "nameDerAusgabe")
