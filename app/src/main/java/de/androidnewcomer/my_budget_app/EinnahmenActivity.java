@@ -20,6 +20,32 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * ##################################################################################################################################
+ * ##################################################################################################################################
+ * ##################################################################################################################################
+ *
+ *
+ *
+ * @autor                   Ki LIAN
+ * @version                 1.0
+ * @date                    14.03.2019
+ *
+ *
+ * Klasse EinnahmenActivity
+ * Erstellung der Ausgaben
+ * @param AusgabenActivity das Activiti des home Menus
+ * @param home Button Zurück zum Home Menu
+ * @param createEinnahme Erstellung der Einnahme
+ * @param inputTextAusgabe Inputfeld Name des Betrags der Ausgabe
+ * @param inputNumberAusgabe Inputfeld Betrag der Ausgabe
+ *
+ *
+ *
+ * ##################################################################################################################################
+ * ##################################################################################################################################
+ * ##################################################################################################################################
+ */
 public class EinnahmenActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EinnahmenActivity mainActivity;
@@ -37,6 +63,12 @@ public class EinnahmenActivity extends AppCompatActivity implements View.OnClick
         home.setOnClickListener(this);
     }
 
+    /**
+     * @param view übergabe der Home Activity um zurück zur Startseite zu gelangen
+     * Beim klicken auf den Button btn_zurueck gelangt der Anwender zur Startseite mainActivity.
+     *
+     * Beim klicken auf den btn_einnahmen wird eine neue Einnahme erstellt
+     */
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.btn_zurueck) {
@@ -54,8 +86,8 @@ public class EinnahmenActivity extends AppCompatActivity implements View.OnClick
     /**
      * @param name name der Einnahme
      * @param betrag betrag der Einnahme
-     * Fügt die Einnahme in die Datenank myBudgetApp
-     *
+     * Fügt die Ausgaben in die Datenank myBudgetApp
+     * Bei erfolgreicher erstellung ist eine Konsolenausgabe ersichtlich
      */
     public void createEinnahme(final String name, final double betrag){
         AsyncTask.execute(new Runnable() {

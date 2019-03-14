@@ -18,6 +18,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * ##################################################################################################################################
+ * ##################################################################################################################################
+ * ##################################################################################################################################
+ *
+ *
+ *
+ * @autor                   Ki LIAN
+ * @version                 1.0
+ * @date                    14.03.2019
+ *
+ *
+ * Klasse AusgabenActivity
+ * Erstellung der Ausgaben
+ * @param AusgabenActivity das Activiti des home Menus
+ * @param home Button Zurück zum Home Menu
+ * @param inputTextAusgabe Inputfeld Name des Betrags der Ausgabe
+ * @param inputNumberAusgabe Inputfeld Betrag der Ausgabe
+ *
+ *
+ *
+ * ##################################################################################################################################
+ * ##################################################################################################################################
+ * ##################################################################################################################################
+ */
 public class AusgabenActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AusgabenActivity mainActivity;
@@ -34,6 +59,10 @@ public class AusgabenActivity extends AppCompatActivity implements View.OnClickL
         home.setOnClickListener(this);
     }
 
+    /**
+     * @param view übergabe der Home Activity um zurück zur Startseite zu gelangen
+     * Beim klicken auf den Button btn_zurueck gelangt der Anwender zur Startseite mainActivity.
+     */
     @Override
     public void onClick(View view) {
 
@@ -52,15 +81,21 @@ public class AusgabenActivity extends AppCompatActivity implements View.OnClickL
      * @param name name der Ausgabe
      * @param betrag betrag der Ausgabe
      * Fügt die Ausgaben in die Datenank myBudgetApp
-     *
+     * Bei erfolgreicher erstellung ist eine Konsolenausgabe ersichtlich
      */
     public void createAusgabe(final String name, final double betrag){
         Log.d("Ausgabe", "Ausgabe Runnable");
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
+                /**
+                 * Ausgabe erstellen und mit Namen und Betrag instanzieren
+                 */
                 Ausgabe ausgabe = new Ausgabe(name, betrag);
                 if (ausgabe.getNameDerAusgabe() != "" && ausgabe.getBetragDerAusgabe() > 0) {
+                    /**
+                     * Datenbank verbindung aufbauen
+                     */
                     DatabaseConnection db = Room.databaseBuilder(getApplicationContext(),
                             DatabaseConnection.class, "myBudgetApp").fallbackToDestructiveMigration().build();
                     db.ausgabeDAO().insertAll(ausgabe);
